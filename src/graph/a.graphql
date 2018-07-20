@@ -1,0 +1,6 @@
+query  CarSource{
+  CarSource {
+     address
+    type
+  }
+}

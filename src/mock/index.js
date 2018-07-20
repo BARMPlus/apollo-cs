@@ -4,23 +4,10 @@
 
 import {makeExecutableSchema, addMockFunctionsToSchema,} from 'graphql-tools';
 
+import typeDefs from './typeDefs'
 
-const typeDefs = `
-  type User {
-     id: String,
-     age:Boolean
-  }
-  type Query {
-    text(message:Int!):[User]
-    hello: String
-    aString: String
-    aBoolean: Boolean
-    anInt: Int
-    author:[User],
-    message(msg:String):String
-    
-  }
-`;
+
+
 
 const resolvers = {
   Query: {
@@ -43,8 +30,8 @@ const resolvers = {
   }
 };
 
-export const schema = makeExecutableSchema({typeDefs, resolvers});
+export const schema = makeExecutableSchema({typeDefs});
 
 
-//addMockFunctionsToSchema({schema});  //自动模拟数据
+addMockFunctionsToSchema({schema});  //自动模拟数据
 

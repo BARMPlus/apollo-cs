@@ -3,7 +3,7 @@ import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 
-import * as Schema from './schema';
+import * as Schema from './index';
 
 const PORT = 3020;
 const server = express();

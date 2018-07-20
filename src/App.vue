@@ -5,9 +5,17 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
+  import gql from 'graphql-tag';
+
   export default {
-    name: 'App'
+    name: 'App',
+    apollo:{
+      address:gql`{
+            CarSource{
+
+            }
+      }`
+    }
   }
 </script>
 

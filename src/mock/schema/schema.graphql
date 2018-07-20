@@ -1,0 +1,419 @@
+# source: http://115.159.154.194:8080/graphql
+# timestamp: Fri Jul 20 2018 09:03:03 GMT+0800 (中国标准时间)
+
+schema {
+  query: QueryType_JPA
+  mutation: Mutation_SpringMVC
+}
+
+"""This directive allows results to be deferred during execution"""
+directive @defer on FIELD
+
+"""车辆来源"""
+type CarSource {
+  """地址"""
+  address(orderBy: OrderByDirection): String
+  updatetime(orderBy: OrderByDirection): Long
+
+  """类型,当前类型分为自营/合作，对应回传信息为own/coporate,是否禁用"""
+  type(orderBy: OrderByDirection): String
+  number(orderBy: OrderByDirection): String
+
+  """是否禁用"""
+  disabled(orderBy: OrderByDirection): Boolean
+  createactorid(orderBy: OrderByDirection): String
+  updateactorid(orderBy: OrderByDirection): String
+  id(orderBy: OrderByDirection): String
+
+  """名称"""
+  name(orderBy: OrderByDirection): String
+  createtime(orderBy: OrderByDirection): Long
+
+  """联系方式"""
+  tel(orderBy: OrderByDirection): String
+}
+
+"""车辆来源"""
+input CarSource_ {
+  """地址"""
+  address: String
+  updatetime: Long
+
+  """类型,当前类型分为自营/合作，对应回传信息为own/coporate,是否禁用"""
+  type: String
+  number: String
+
+  """是否禁用"""
+  disabled: Boolean
+  createactorid: String
+  updateactorid: String
+  id: String
+
+  """名称"""
+  name: String
+  createtime: Long
+
+  """联系方式"""
+  tel: String
+}
+
+"""
+'Connection' response wrapper object for CarSource.  When pagination or
+aggregation is requested, this object will be returned with metadata about the query.
+"""
+type CarSourceConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [CarSource]
+}
+
+"""Long type"""
+scalar Long
+
+"""将所有的SpringMVC.Controller中的Requestmapping方法暴露出来了"""
+type Mutation_SpringMVC {
+  ABC_updateuser(userid: String!): UserConnection
+  ABC_createAcceptance(client: User_!): User
+
+  """禁用车辆来源"""
+  mlshop_disablecarsource(carsource: CarSource_!): CarSource
+
+  """修改车辆来源"""
+  mlshop_updatecarsource(carsource: CarSource_!): CarSource
+  ABC_abc(role: Role_!, id: String, count: Int!): User
+
+  """增加车辆来源"""
+  mlshop_addcarsource(carsource: CarSource_!): CarSource
+
+  """启用车辆来源"""
+  mlshop_enablcarsource(carsource: CarSource_!): CarSource
+}
+
+"""Describes the direction (Ascending / Descending) to sort a field."""
+enum OrderByDirection {
+  """Ascending"""
+  ASC
+
+  """Descending"""
+  DESC
+}
+
+"""
+Query object for Pagination Requests, specifying the requested page, and that page's size.
+
+NOTE: 'page' parameter is 1-indexed, NOT 0-indexed.
+
+Example: paginationRequest { page: 1, size: 20 }
+"""
+input PaginationObject {
+  """Which page should be returned, starting with 1 (1-indexed)"""
+  page: Int
+
+  """How many results should this page contain"""
+  size: Int
+}
+
+"""UserRoleItem who uses the application"""
+type Privi {
+  updatetime(orderBy: OrderByDirection): Long
+  number(orderBy: OrderByDirection): String
+  name(orderBy: OrderByDirection): String
+  createactorid(orderBy: OrderByDirection): String
+  updateactorid(orderBy: OrderByDirection): String
+  id(orderBy: OrderByDirection): String
+  createtime(orderBy: OrderByDirection): Long
+}
+
+"""UserRoleItem who uses the application"""
+input Privi_ {
+  updatetime: Long
+  number: String
+  name: String
+  createactorid: String
+  updateactorid: String
+  id: String
+  createtime: Long
+}
+
+"""
+'Connection' response wrapper object for Privi.  When pagination or aggregation
+is requested, this object will be returned with metadata about the query.
+"""
+type PriviConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [Privi]
+}
+
+"""过滤表达式"""
+input Qfilter {
+  """键：role.id或者role.privilegeItem.name"""
+  key: String
+
+  """值：现在所有的都用字符串，或者null,或者适用于like的 '%abc'"""
+  value: String
+
+  """操作符:>,<，=，notnull，isnul，等，后续需要改为枚举"""
+  operator: QueryFilterOperator
+
+  """后续改为枚举，AND，ON"""
+  combinator: QueryFilterCombinator
+
+  """下一个，或者为null"""
+  next: Qfilter
+}
+
+"""查询表达式组合操作符"""
+enum QueryFilterCombinator {
+  """and"""
+  AND
+
+  """or"""
+  OR
+
+  """!"""
+  NOT
+}
+
+"""查询过滤操作符"""
+enum QueryFilterOperator {
+  """is null"""
+  ISNULL
+
+  """is not null"""
+  ISNOTNULL
+
+  """>"""
+  GREATTHAN
+
+  """<"""
+  LESSTHAN
+
+  """>="""
+  NOTLESSTHAN
+
+  """<="""
+  NOTGREATTHAN
+
+  """="""
+  EQUEAL
+
+  """in"""
+  IN
+
+  """not in"""
+  NOTIN
+
+  """not"""
+  NOT
+
+  """like"""
+  LIKE
+}
+
+"""DDD领域模型下的JPA查询,所有类型均有createtime（创建时间属性),updatedtime(修改时间属性)"""
+type QueryType_JPA {
+  """RolePrevilegeItem who uses the application"""
+  RolePrevilegeItem(id: String): RolePrevilegeItem
+
+  """User who uses the application"""
+  User(lastName: String, updatetime: Long, number: String, firstName: String, createactorid: String, updateactorid: String, id: String, createtime: Long): User
+
+  """UserRoleItem who uses the application"""
+  Privi(updatetime: Long, number: String, name: String, createactorid: String, updateactorid: String, id: String, createtime: Long): Privi
+
+  """车辆来源"""
+  CarSource(address: String, updatetime: Long, type: String, number: String, disabled: Boolean, createactorid: String, updateactorid: String, id: String, name: String, createtime: Long, tel: String): CarSource
+
+  """UserRoleItem who uses the application"""
+  UserRoleItem(id: String): UserRoleItem
+
+  """UserRoleItem who uses the application"""
+  Role(name: String, updatetime: Long, number: String, createactorid: String, updateactorid: String, id: String, createtime: Long): Role
+
+  """
+  'Connection' request wrapper object for RolePrevilegeItem.  Use this object in
+  a query to request things like pagination or aggregation in an argument.  Use
+  the 'content' field to request actual fields 
+  """
+  RolePrevilegeItemConnection(paginationRequest: PaginationObject, qfilter: Qfilter): RolePrevilegeItemConnection
+
+  """
+  'Connection' request wrapper object for User.  Use this object in a query to
+  request things like pagination or aggregation in an argument.  Use the
+  'content' field to request actual fields 
+  """
+  UserConnection(paginationRequest: PaginationObject, qfilter: Qfilter): UserConnection
+
+  """
+  'Connection' request wrapper object for Privi.  Use this object in a query to
+  request things like pagination or aggregation in an argument.  Use the
+  'content' field to request actual fields 
+  """
+  PriviConnection(paginationRequest: PaginationObject, qfilter: Qfilter): PriviConnection
+
+  """
+  'Connection' request wrapper object for CarSource.  Use this object in a query
+  to request things like pagination or aggregation in an argument.  Use the
+  'content' field to request actual fields 
+  """
+  CarSourceConnection(paginationRequest: PaginationObject, qfilter: Qfilter): CarSourceConnection
+
+  """
+  'Connection' request wrapper object for UserRoleItem.  Use this object in a
+  query to request things like pagination or aggregation in an argument.  Use
+  the 'content' field to request actual fields 
+  """
+  UserRoleItemConnection(paginationRequest: PaginationObject, qfilter: Qfilter): UserRoleItemConnection
+
+  """
+  'Connection' request wrapper object for Role.  Use this object in a query to
+  request things like pagination or aggregation in an argument.  Use the
+  'content' field to request actual fields 
+  """
+  RoleConnection(paginationRequest: PaginationObject, qfilter: Qfilter): RoleConnection
+}
+
+"""UserRoleItem who uses the application"""
+type Role {
+  name(orderBy: OrderByDirection): String
+  previlegeItems(orderBy: OrderByDirection): [RolePrevilegeItem]
+  updatetime(orderBy: OrderByDirection): Long
+  number(orderBy: OrderByDirection): String
+  createactorid(orderBy: OrderByDirection): String
+  updateactorid(orderBy: OrderByDirection): String
+  id(orderBy: OrderByDirection): String
+  createtime(orderBy: OrderByDirection): Long
+}
+
+"""UserRoleItem who uses the application"""
+input Role_ {
+  name: String
+  previlegeItems: [RolePrevilegeItem_]
+  updatetime: Long
+  number: String
+  createactorid: String
+  updateactorid: String
+  id: String
+  createtime: Long
+}
+
+"""
+'Connection' response wrapper object for Role.  When pagination or aggregation
+is requested, this object will be returned with metadata about the query.
+"""
+type RoleConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [Role]
+}
+
+"""RolePrevilegeItem who uses the application"""
+type RolePrevilegeItem {
+  id(orderBy: OrderByDirection): String
+  privi(orderBy: OrderByDirection, updatetime: Long, number: String, name: String, createactorid: String, updateactorid: String, id: String, createtime: Long): Privi
+}
+
+"""RolePrevilegeItem who uses the application"""
+input RolePrevilegeItem_ {
+  id: String
+  privi: Privi_
+}
+
+"""
+'Connection' response wrapper object for RolePrevilegeItem.  When pagination or
+aggregation is requested, this object will be returned with metadata about the query.
+"""
+type RolePrevilegeItemConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [RolePrevilegeItem]
+}
+
+"""User who uses the application"""
+type User {
+  lastName(orderBy: OrderByDirection): String
+  updatetime(orderBy: OrderByDirection): Long
+  number(orderBy: OrderByDirection): String
+  firstName(orderBy: OrderByDirection): String
+  roleItems(orderBy: OrderByDirection): [UserRoleItem]
+  createactorid(orderBy: OrderByDirection): String
+  updateactorid(orderBy: OrderByDirection): String
+  id(orderBy: OrderByDirection): String
+  createtime(orderBy: OrderByDirection): Long
+}
+
+"""User who uses the application"""
+input User_ {
+  lastName: String
+  updatetime: Long
+  number: String
+  firstName: String
+  roleItems: [UserRoleItem_]
+  createactorid: String
+  updateactorid: String
+  id: String
+  createtime: Long
+}
+
+"""
+'Connection' response wrapper object for User.  When pagination or aggregation
+is requested, this object will be returned with metadata about the query.
+"""
+type UserConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [User]
+}
+
+"""UserRoleItem who uses the application"""
+type UserRoleItem {
+  role(orderBy: OrderByDirection, name: String, updatetime: Long, number: String, createactorid: String, updateactorid: String, id: String, createtime: Long): Role
+  id(orderBy: OrderByDirection): String
+}
+
+"""UserRoleItem who uses the application"""
+input UserRoleItem_ {
+  role: Role_
+  id: String
+}
+
+"""
+'Connection' response wrapper object for UserRoleItem.  When pagination or
+aggregation is requested, this object will be returned with metadata about the query.
+"""
+type UserRoleItemConnection {
+  """Total number of pages calculated on the database for this pageSize."""
+  totalPages: Long
+
+  """Total number of results on the database for this query."""
+  totalElements: Long
+
+  """The actual object results"""
+  content: [UserRoleItem]
+}
